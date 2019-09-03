@@ -1,1 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
 
+body {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.5em;
+    margin: 30px 10px;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 22px;
+    color: gray;
+}
+
+.pre-message {
+    margin: 5px auto;
+    text-align: center;
+    font-weight: bold;
+    color: gray;
+    background: whitesmoke;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+.inline-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.inline-form input {
+  flex: 4;
+  padding: 12px 20px;
+  margin: 4px;
+  box-sizing: border-box;
+  border: 2px solid royalblue;
+  border-radius: 4px;
+}
+
+.inline-form button {
+  flex: 1;
+  background-color: #3498db;
+  border: none;
+  color: white;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+input[type="text"]:focus {
+  background-color: fff;
+}
+
+input::placeholder {
+  text-align: center;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    text-align: center;
+}
+
+.user {
+  width: 300px;
+  padding: 10px;
+  margin: 1rem;
+  box-shadow: 7px 10px 12px -5px rgba(0, 0, 0, 0.56);
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 80%;
+}
+
+.avatar {
+  width: 40%;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.56);
+}
+
+.user-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.api-error {
+    text-align: center;
+    margin-top: 20px;
+    color: saddlebrown;
+    font-weight: bold;
+}

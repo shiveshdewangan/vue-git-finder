@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div>
+  <div class="container">
+    <div class="app">
       <div class="header">Git Finder</div>
       <div class="form">
         <form class="inline-form" @submit.prevent="fetchUser">
@@ -9,28 +9,35 @@
         </form>
       </div>
       <div>
-        <span v-if="errors.input">{{errors.input}}</span>
+        <span class="error" v-if="errors.input">{{errors.input}}</span>
       </div>
     </div>
-    <div>
-      <div v-if="this.users.length < 1">Please type a github user to get started</div>
+    <div v-if="!apiError" class="user-list">
+      <div class="pre-message" v-if="this.users.length < 1">Please type a github user to get started</div>
       <div v-else v-bind:key="index" v-for="(u, index) in users">
-        <strong class="user">
-          <h3 :class="name">
-            <em>{{u.login}}</em>
+        <article class="user">
+          <h3 class="name">
+            <em>{{u.name}}</em>
           </h3>
-          <img :class="avatar" :src="u.avatar_url" :alt="u.login" />
+          <img class="avatar" :src="u.avatar_url" :alt="u.login" />
           <div>
-            <strong>{{u.public_repos}}</strong>
+            <strong>Repos</strong>:
+            <span>{{u.public_repos}}</span>
           </div>
-        </strong>
+          <p v-if="u.bio">
+            <strong>Bio</strong>
+            : {{u.bio}}
+          </p>
+        </article>
       </div>
     </div>
+    <div class="api-error" v-else>{{apiError}}</div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { setTimeout } from "timers";
 
 export default {
   name: "Users",
@@ -40,7 +47,8 @@ export default {
       users: [],
       errors: {
         input: null
-      }
+      },
+      apiError: null
     };
   },
   methods: {
@@ -53,12 +61,18 @@ export default {
 
       this.errors.input = null;
 
-      const { data } = await axios.get(
-        `https://api.github.com/users/${this.user}`
-      );
-      console.log(data);
-      this.users.push(data);
-      console.log("this.users", this.users);
+      try {
+        const { data } = await axios.get(
+          `https://api.github.com/users/${this.user}`
+        );
+        this.users.push(data);
+      } catch (error) {
+        this.apiError =
+          "Something went wrong. Please try again with a valid ID :)";
+        setTimeout(() => {
+          this.apiError = "";
+        }, 3000);
+      }
       this.user = "";
     },
     isInputEmpty() {
@@ -67,71 +81,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.inline-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.inline-form input {
-  flex: 4;
-  padding: 12px 20px;
-  margin: 4px;
-  box-sizing: border-box;
-  border: 2px solid royalblue;
-  border-radius: 4px;
-}
-
-.inline-form button {
-  flex: 1;
-  background-color: #3498db;
-  border: none;
-  color: white;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 10px 20px;
-}
-
-.form-inline button:hover {
-  background-color: royalblue;
-}
-
-input[type="text"]:focus {
-  background-color: fff;
-}
-
-input::placeholder {
-  text-align: center;
-}
-
-.user {
-  width: 300px;
-  padding: 10px;
-  margin: 1rem;
-  box-shadow: 7px 10px 12px -5px rgba(0, 0, 0, 0.56);
-  text-align: center;
-  background-color: white;
-  border-radius: 5px;
-  font-size: 80%;
-}
-
-.avatar {
-  width: 40%;
-  border-radius: 50%;
-  box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.56);
-}
-
-.user-list {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-
-.hidden {
-  display: none;
-}
-</style>
