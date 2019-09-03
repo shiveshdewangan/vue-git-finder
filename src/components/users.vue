@@ -26,7 +26,8 @@
           </div>
           <p v-if="u.bio">
             <strong>Bio</strong>
-            :
+          </p>
+          <p v-else>
             <strong>No bio yet</strong>
           </p>
         </article>
