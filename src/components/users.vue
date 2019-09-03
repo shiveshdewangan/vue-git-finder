@@ -1,21 +1,30 @@
 <template>
-  <div>
-    <header>Git Finder</header>
-    <form class="inline-form" @submit.prevent="fetchUser">
-      <div>
-        <label for="user">Username</label>
-        <input v-model="user" type="text" placeholder="Github User" />
-        <button type="submit">Submit</button>
-        <br />
-        <span v-if="errors.input">{{errors.input}}</span>
-        <span v-else>
-          <br />
-        </span>
+  <div id="app">
+    <div>
+      <div class="header">Git Finder</div>
+      <div class="form">
+        <form class="inline-form" @submit.prevent="fetchUser">
+          <input v-model="user" id="user" type="text" placeholder="Github User" />
+          <button type="submit">Submit</button>
+        </form>
       </div>
-    </form>
+      <div>
+        <span v-if="errors.input">{{errors.input}}</span>
+      </div>
+    </div>
     <div>
       <div v-if="this.users.length < 1">Please type a github user to get started</div>
-      <div v-else v-bind:key="index" v-for="(u, index) in users">{{u.login}}</div>
+      <div v-else v-bind:key="index" v-for="(u, index) in users">
+        <strong class="user">
+          <h3 :class="name">
+            <em>{{u.login}}</em>
+          </h3>
+          <img :class="avatar" :src="u.avatar_url" :alt="u.login" />
+          <div>
+            <strong>{{u.public_repos}}</strong>
+          </div>
+        </strong>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +47,7 @@ export default {
     async fetchUser() {
       if (this.isInputEmpty()) {
         this.errors.input = "Input Field can not be empty";
+        this.user = null;
         return;
       }
 

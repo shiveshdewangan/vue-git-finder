@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <Users msg="Welcome to Your Vue.js App" />
-  </div>
+    <Users />
 </template>
 
 <script>
@@ -25,9 +23,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.header {
-  margin: 0;
+  justify-content: center;
 }
 </style>
