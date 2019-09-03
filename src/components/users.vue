@@ -26,7 +26,8 @@
           </div>
           <p v-if="u.bio">
             <strong>Bio</strong>
-            : {{u.bio}}
+            :
+            <strong>No bio yet</strong>
           </p>
         </article>
       </div>
